@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InventoryManagement.Classes.common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,36 @@ namespace InventoryManagement.Classes.Product
 {
     public class Product
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+
+        private Price price;
+        public Price Price {
+            get { return this.price; }
+            set {
+                try
+                {
+                    this.price = value;
+                }
+                catch (ArgumentOutOfRangeException ex) { 
+                    Console.WriteLine(ex.Message);
+                }
+            } 
+        }
+
+        public Product() { }
+        public Product(int id, string name, Price price, int quantity) {
+            try
+            {
+                this.Id = id;
+                this.Name = name;
+                this.Price = price;
+                this.Quantity = quantity;
+            }
+            catch (ArgumentOutOfRangeException ex) { 
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }
