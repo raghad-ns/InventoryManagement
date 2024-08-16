@@ -32,7 +32,7 @@ namespace InventoryManagement
 
                 switch (action)
                 {
-                    case "1":
+                    case "1": // Add
                         Console.WriteLine("Enter product Id: ");
                         int id = int.Parse(Console.ReadLine());
                         Console.WriteLine("Enter product Name: ");
@@ -50,24 +50,37 @@ namespace InventoryManagement
                         string choosenCurrency = Console.ReadLine();
                         Currency currency = (Currency)Enum.Parse(typeof(Currency), choosenCurrency ?? "1");
                         inventory.AddItem(new RegularProduct(id, name, new Price(price, currency), quantity));
-                        Console.WriteLine("Product added successfully");
-                        Console.ReadLine();
                         break;
 
-                    case "2":
+                    case "2": // Display list
                         inventory.DisplayItemsList();
-                        Console.WriteLine("Press enter to continue...");
-                        Console.ReadLine();
                         break;
-                    case "3":
+                    case "3": // Edit
                         break;
-                    case "4":
+                    case "4": // Delete
+                        Console.WriteLine("Enter the product name to delete");
+                        string productName = Console.ReadLine();
+                        inventory.DeleteItem(productName);
                         break;
-                    case "5":
+                    case "5": // Search
+                        Console.WriteLine($"Enter the product name to search for: ");
+                        string searchTerm = Console.ReadLine();
+                        Product product = inventory.SearchItem(searchTerm);
+                        if (product != null)
+                        {
+                            Console.WriteLine("Product found:");
+                            Console.WriteLine(product.ToString());
+                        }
+                        else
+                        {
+                            Console.WriteLine("Product doesn't exist!");
+                        }
                         break;
-                    case "0":
+                    case "0": // Exit
                         break;
                 }
+                Console.WriteLine("Press enter to continue...");
+                Console.ReadLine();
             }
         }
     }

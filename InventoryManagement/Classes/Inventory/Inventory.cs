@@ -26,6 +26,7 @@ namespace InventoryManagement.Classes.InventoryManagement
             if (product != null)
             {
                 InventoryProducts.Remove(product as Product);
+                Console.WriteLine("Product deleted successfully!");
             }
             else 
             {
@@ -34,14 +35,22 @@ namespace InventoryManagement.Classes.InventoryManagement
         }
         public void DisplayItemsList()
         {
-            foreach (Product item in InventoryProducts) { 
-                Console.WriteLine(item.ToString());
+            if (InventoryProducts.Count > 0)
+            {
+                Console.WriteLine($"Inventory's products list: ");
+                foreach (Product item in InventoryProducts)
+                {
+                    Console.WriteLine(item.ToString());
+                }
+            }
+            else {
+                Console.WriteLine("Inventory is empty, no product found!");
             }
         }
         public Product SearchItem(string name) {
             foreach (var item in InventoryProducts)
             {
-                if (item.Name == name) return item;
+                if (item.Name.ToLower() == name.ToLower()) return item;
             }
             return null;
         }
