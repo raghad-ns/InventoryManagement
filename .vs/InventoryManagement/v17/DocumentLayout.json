@@ -11,12 +11,16 @@
       "RelativeMoniker": "D:0:0:{00B3A76F-63FA-4444-AD79-DD28C6E27355}|InventoryManagement\\InventoryManagement.csproj|solutionrelative:inventorymanagement\\classes\\inventory\\inventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{00B3A76F-63FA-4444-AD79-DD28C6E27355}|InventoryManagement\\InventoryManagement.csproj|c:\\users\\m.t\\desktop\\projects\\foothill\\practice-projects\\inventorymanagement\\inventorymanagement\\classes\\productmanagement\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{00B3A76F-63FA-4444-AD79-DD28C6E27355}|InventoryManagement\\InventoryManagement.csproj|solutionrelative:inventorymanagement\\classes\\productmanagement\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{00B3A76F-63FA-4444-AD79-DD28C6E27355}|InventoryManagement\\InventoryManagement.csproj|c:\\users\\m.t\\desktop\\projects\\foothill\\practice-projects\\inventorymanagement\\inventorymanagement\\interfaces\\edit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{00B3A76F-63FA-4444-AD79-DD28C6E27355}|InventoryManagement\\InventoryManagement.csproj|solutionrelative:inventorymanagement\\interfaces\\edit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{00B3A76F-63FA-4444-AD79-DD28C6E27355}|InventoryManagement\\InventoryManagement.csproj|c:\\users\\m.t\\desktop\\projects\\foothill\\practice-projects\\inventorymanagement\\inventorymanagement\\classes\\productmanagement\\producttypes\\regularproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{00B3A76F-63FA-4444-AD79-DD28C6E27355}|InventoryManagement\\InventoryManagement.csproj|solutionrelative:inventorymanagement\\classes\\productmanagement\\producttypes\\regularproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00B3A76F-63FA-4444-AD79-DD28C6E27355}|InventoryManagement\\InventoryManagement.csproj|c:\\users\\m.t\\desktop\\projects\\foothill\\practice-projects\\inventorymanagement\\inventorymanagement\\classes\\productmanagement\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{00B3A76F-63FA-4444-AD79-DD28C6E27355}|InventoryManagement\\InventoryManagement.csproj|solutionrelative:inventorymanagement\\classes\\productmanagement\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,8 +30,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Edit.cs",
+              "DocumentMoniker": "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\InventoryManagement\\InventoryManagement\\Interfaces\\Edit.cs",
+              "RelativeDocumentMoniker": "InventoryManagement\\Interfaces\\Edit.cs",
+              "ToolTip": "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\InventoryManagement\\InventoryManagement\\Interfaces\\Edit.cs",
+              "RelativeToolTip": "InventoryManagement\\Interfaces\\Edit.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-16T19:41:11.519Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 3,
@@ -49,14 +66,14 @@
               "RelativeDocumentMoniker": "InventoryManagement\\Classes\\Inventory\\Inventory.cs",
               "ToolTip": "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\InventoryManagement\\InventoryManagement\\Classes\\Inventory\\Inventory.cs",
               "RelativeToolTip": "InventoryManagement\\Classes\\Inventory\\Inventory.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAAC4AAABIAAAA",
+              "ViewState": "AQIAADMAAAAAAAAAAAAAAEcAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-15T09:59:18.492Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Product.cs",
               "DocumentMoniker": "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\InventoryManagement\\InventoryManagement\\Classes\\ProductManagement\\Product.cs",
               "RelativeDocumentMoniker": "InventoryManagement\\Classes\\ProductManagement\\Product.cs",
@@ -75,7 +92,7 @@
               "RelativeDocumentMoniker": "InventoryManagement\\Program.cs",
               "ToolTip": "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\InventoryManagement\\InventoryManagement\\Program.cs",
               "RelativeToolTip": "InventoryManagement\\Program.cs",
-              "ViewState": "AQIAADQAAAAAAAAAAAAQwD4AAAA6AAAA",
+              "ViewState": "AQIAACAAAAAAAAAAAAAAwCoAAABOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-14T12:13:57.394Z",
               "EditorCaption": ""

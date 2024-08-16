@@ -33,29 +33,16 @@ namespace InventoryManagement
                 switch (action)
                 {
                     case "1": // Add
-                        Console.WriteLine("Enter product Id: ");
-                        int id = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Enter product Name: ");
-                        string name = Console.ReadLine();
-                        Console.WriteLine("Enter the quantity in stock: ");
-                        int quantity = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Enter the product's price: ");
-                        double price = double.Parse(Console.ReadLine());
-                        Console.WriteLine("Choose the currency:/n");
-                        int index = 1;
-                        foreach (string currencyName in Enum.GetNames(typeof(Currency)))
-                        {
-                            Console.WriteLine($"{index++}. {currencyName}");
-                        }
-                        string choosenCurrency = Console.ReadLine();
-                        Currency currency = (Currency)Enum.Parse(typeof(Currency), choosenCurrency ?? "1");
-                        inventory.AddItem(new RegularProduct(id, name, new Price(price, currency), quantity));
+                        inventory.AddItem(GetProductInfo());
                         break;
 
                     case "2": // Display list
                         inventory.DisplayItemsList();
                         break;
                     case "3": // Edit
+                        Console.WriteLine("Enter the product name to edit: ");
+                        string productNameToEdit = Console.ReadLine();
+                        inventory.Edit(productNameToEdit, GetProductInfo());
                         break;
                     case "4": // Delete
                         Console.WriteLine("Enter the product name to delete");
@@ -82,6 +69,27 @@ namespace InventoryManagement
                 Console.WriteLine("Press enter to continue...");
                 Console.ReadLine();
             }
+        }
+
+        private static Product GetProductInfo()
+        {
+            Console.WriteLine("Enter product Id: ");
+            int id = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter product Name: ");
+            string name = Console.ReadLine();
+            Console.WriteLine("Enter the quantity in stock: ");
+            int quantity = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the product's price: ");
+            double price = double.Parse(Console.ReadLine());
+            Console.WriteLine("Choose the currency:/n");
+            int index = 1;
+            foreach (string currencyName in Enum.GetNames(typeof(Currency)))
+            {
+                Console.WriteLine($"{index++}. {currencyName}");
+            }
+            string choosenCurrency = Console.ReadLine();
+            Currency currency = (Currency)Enum.Parse(typeof(Currency), choosenCurrency ?? "1");
+            return new RegularProduct(id, name, new Price(price, currency), quantity);
         }
     }
 }
