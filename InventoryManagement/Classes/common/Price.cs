@@ -9,9 +9,10 @@ namespace InventoryManagement.Classes.common
 {
     public class Price
     {
-        public double amount;
-        public double Amount { 
-            get { return amount; } 
+        private double amount;
+        public double Amount
+        {
+            get { return amount; }
             set
             {
                 if (value < 0) throw new ArgumentOutOfRangeException("Price should be greater than 0");
@@ -20,7 +21,8 @@ namespace InventoryManagement.Classes.common
         }
         public Currency Currency { get; set; }
         public Price() { }
-        public Price(int price, Currency currency) {
+        public Price(double price, Currency currency)
+        {
             this.Amount = price;
             this.Currency = currency;
         }

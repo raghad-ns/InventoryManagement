@@ -5,30 +5,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagement.Classes.Product
+namespace InventoryManagement.Classes.ProductManagement
 {
     public class Product
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; }= string.Empty;
         public int Quantity { get; set; }
 
-        private Price price;
-        public Price Price {
+        private Price price= new();
+        public Price Price
+        {
             get { return this.price; }
-            set {
+            set
+            {
                 try
                 {
                     this.price = value;
                 }
-                catch (ArgumentOutOfRangeException ex) { 
+                catch (ArgumentOutOfRangeException ex)
+                {
                     Console.WriteLine(ex.Message);
                 }
-            } 
+            }
         }
 
         public Product() { }
-        public Product(int id, string name, Price price, int quantity) {
+        public Product(int id, string name, Price price, int quantity)
+        {
             try
             {
                 this.Id = id;
@@ -36,7 +40,8 @@ namespace InventoryManagement.Classes.Product
                 this.Price = price;
                 this.Quantity = quantity;
             }
-            catch (ArgumentOutOfRangeException ex) { 
+            catch (ArgumentOutOfRangeException ex)
+            {
                 Console.WriteLine(ex.Message);
             }
         }
