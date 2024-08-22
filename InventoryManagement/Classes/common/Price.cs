@@ -1,4 +1,5 @@
 ﻿using InventoryManagement.Enums.common;
+using InventoryManagement.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace InventoryManagement.Classes.common
             get { return amount; }
             set
             {
-                if (value < 0) throw new ArgumentOutOfRangeException("Price should be greater than 0");
+                if (value < 0) throw new NegativePriceException();
                 else amount = value;
             }
         }

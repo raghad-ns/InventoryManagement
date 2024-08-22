@@ -3,7 +3,7 @@ using InventoryManagement.Classes.common;
 using System;
 using InventoryManagement.Classes.ProductManagement.ProductTypes;
 using InventoryManagement.Enums.common;
-using InventoryManagement.Classes.InventoryManagement;
+using InventoryManagement.Classes.Inventory;
 
 namespace InventoryManagement
 {
@@ -13,9 +13,13 @@ namespace InventoryManagement
         {
             Inventory inventory = new Inventory();
             Console.WriteLine("***Welcome to our inventory management system***");
-            // Product product = new RegularProduct(1, "Rice", new Price(5, Enums.common.Currency.ILS), 50);
-            // Console.WriteLine($"product name: {product.Name}");
 
+            const string add = "1";
+            const string displayList = "2";
+            const string edit = "3";
+            const string delete = "4";
+            const string search = "5";
+            const string exit = "0";
             string action = string.Empty;
 
             while (action != "0")
@@ -28,30 +32,30 @@ namespace InventoryManagement
                 Console.WriteLine("4. Delete a product.");
                 Console.WriteLine("5. Search for a product.");
                 Console.WriteLine("0. Exit.");
-                action = Console.ReadLine();
+                action = Console.ReadLine() ?? "0";
 
                 switch (action)
                 {
-                    case "1": // Add
+                    case add: 
                         inventory.AddItem(GetProductInfo());
                         break;
 
-                    case "2": // Display list
+                    case displayList: 
                         inventory.DisplayItemsList();
                         break;
-                    case "3": // Edit
+                    case edit: 
                         Console.WriteLine("Enter the product name to edit: ");
-                        string productNameToEdit = Console.ReadLine();
+                        string productNameToEdit = Console.ReadLine() ?? "";
                         inventory.Edit(productNameToEdit, GetProductInfo());
                         break;
-                    case "4": // Delete
+                    case delete: 
                         Console.WriteLine("Enter the product name to delete");
-                        string productName = Console.ReadLine();
+                        string productName = Console.ReadLine() ?? "";
                         inventory.DeleteItem(productName);
                         break;
-                    case "5": // Search
+                    case search: 
                         Console.WriteLine($"Enter the product name to search for: ");
-                        string searchTerm = Console.ReadLine();
+                        string searchTerm = Console.ReadLine() ?? "";
                         Product product = inventory.SearchItem(searchTerm);
                         if (product != null)
                         {
@@ -63,7 +67,7 @@ namespace InventoryManagement
                             Console.WriteLine("Product doesn't exist!");
                         }
                         break;
-                    case "0": // Exit
+                    case exit: 
                         break;
                 }
                 Console.WriteLine("Press enter to continue...");
@@ -74,21 +78,21 @@ namespace InventoryManagement
         private static Product GetProductInfo()
         {
             Console.WriteLine("Enter product Id: ");
-            int id = int.Parse(Console.ReadLine());
+            int id = int.Parse(Console.ReadLine() ?? "");
             Console.WriteLine("Enter product Name: ");
-            string name = Console.ReadLine();
+            string name = Console.ReadLine() ?? "";
             Console.WriteLine("Enter the quantity in stock: ");
-            int quantity = int.Parse(Console.ReadLine());
+            int quantity = int.Parse(Console.ReadLine() ?? "");
             Console.WriteLine("Enter the product's price: ");
-            double price = double.Parse(Console.ReadLine());
+            double price = double.Parse(Console.ReadLine() ?? "");
             Console.WriteLine("Choose the currency:/n");
             int index = 1;
             foreach (string currencyName in Enum.GetNames(typeof(Currency)))
             {
                 Console.WriteLine($"{index++}. {currencyName}");
             }
-            string choosenCurrency = Console.ReadLine();
-            Currency currency = (Currency)Enum.Parse(typeof(Currency), choosenCurrency ?? "1");
+            string choosenCurrency = Console.ReadLine() ?? "1";
+            Currency currency = (Currency)Enum.Parse(typeof(Currency), choosenCurrency);
             return new RegularProduct(id, name, new Price(price, currency), quantity);
         }
     }

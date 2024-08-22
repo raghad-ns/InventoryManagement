@@ -6,16 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using InventoryManagement.Classes;
 using InventoryManagement.Classes.ProductManagement;
-using InventoryManagement.Classes.ProductManagement.ProductTypes;
 
-namespace InventoryManagement.Classes.InventoryManagement
+namespace InventoryManagement.Classes.Inventory
 {
     public class Inventory : Add, Delete, DisplayList, Edit
     {
         private List<Product> InventoryProducts = new();
         public void AddItem(Product item)
         {
-            if (item != null)
+            if (item is not null)
             {
                 InventoryProducts.Add(item);
             }
@@ -25,7 +24,7 @@ namespace InventoryManagement.Classes.InventoryManagement
         {
 
             Product product = SearchItem(name);
-            if (product != null)
+            if (product is not null)
             {
                 InventoryProducts.Remove(product as Product);
                 Console.WriteLine("Product deleted successfully!");
@@ -54,7 +53,7 @@ namespace InventoryManagement.Classes.InventoryManagement
         {
             foreach (var item in InventoryProducts)
             {
-                if (item.Name.ToLower() == name.ToLower()) return item;
+                if (item.Name.ToLower().Equals(name.ToLower())) return item;
             }
             return null;
         }
@@ -68,7 +67,7 @@ namespace InventoryManagement.Classes.InventoryManagement
             bool found = false;
             foreach (var item in InventoryProducts)
             {
-                if (item.Name.ToLower() == name.ToLower())
+                if (item.Name.ToLower().Equals(name.ToLower()))
                 {
                     found = true;
                     item.Name = newProduct.Name;

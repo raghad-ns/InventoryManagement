@@ -1,4 +1,5 @@
 ﻿using InventoryManagement.Classes.common;
+using InventoryManagement.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace InventoryManagement.Classes.ProductManagement
                 this.Price = price;
                 this.Quantity = quantity;
             }
-            catch (ArgumentOutOfRangeException ex)
+            catch (NegativePriceException ex)
             {
                 Console.WriteLine(ex.Message);
             }
