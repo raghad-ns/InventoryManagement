@@ -12,3 +12,4 @@ C:\Users\M.T\Desktop\projects\foothill\practice-projects\InventoryManagement\Inv
 C:\Users\M.T\Desktop\projects\foothill\practice-projects\InventoryManagement\InventoryManagement\obj\Debug\net8.0\InventoryManagement.pdb
 C:\Users\M.T\Desktop\projects\foothill\practice-projects\InventoryManagement\InventoryManagement\obj\Debug\net8.0\InventoryManagement.genruntimeconfig.cache
 C:\Users\M.T\Desktop\projects\foothill\practice-projects\InventoryManagement\InventoryManagement\obj\Debug\net8.0\ref\InventoryManagement.dll
+C:\Users\M.T\Desktop\projects\foothill\practice-projects\InventoryManagement\InventoryManagement\obj\Debug\net8.0\InventoryManagement.sourcelink.json

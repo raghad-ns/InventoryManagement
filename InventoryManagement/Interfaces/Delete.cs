@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagement.Classes.Product
+namespace InventoryManagement.Interfaces
 {
-    public class Product
+    public interface Delete
     {
+        void DeleteItem(string name);
     }
 }
