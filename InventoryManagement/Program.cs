@@ -1,6 +1,6 @@
 ﻿using InventoryManagement.Classes.ProductManagement;
 using InventoryManagement.Classes.common;
-using System;
+using System.Data.SqlClient;
 using InventoryManagement.Classes.ProductManagement.ProductTypes;
 using InventoryManagement.Enums.common;
 using InventoryManagement.Classes.Inventory;
@@ -11,7 +11,7 @@ namespace InventoryManagement
     {
         static void Main(string[] args)
         {
-            Inventory inventory = new Inventory();
+            Inventory inventory = new Inventory(new Database.Database());
             Console.WriteLine("***Welcome to our inventory management system***");
 
             const string add = "1";
@@ -24,54 +24,54 @@ namespace InventoryManagement
 
             while (action != "0")
             {
-                Console.Clear();
-                Console.WriteLine("Select an action");
-                Console.WriteLine("1. Add product.");
-                Console.WriteLine("2. View all products.");
-                Console.WriteLine("3. Edit a product.");
-                Console.WriteLine("4. Delete a product.");
-                Console.WriteLine("5. Search for a product.");
-                Console.WriteLine("0. Exit.");
-                action = Console.ReadLine() ?? "0";
+               Console.Clear();
+               Console.WriteLine("Select an action");
+               Console.WriteLine("1. Add product.");
+               Console.WriteLine("2. View all products.");
+               Console.WriteLine("3. Edit a product.");
+               Console.WriteLine("4. Delete a product.");
+               Console.WriteLine("5. Search for a product.");
+               Console.WriteLine("0. Exit.");
+               action = Console.ReadLine() ?? "0";
 
-                switch (action)
-                {
-                    case add: 
-                        inventory.AddItem(GetProductInfo());
-                        break;
+               switch (action)
+               {
+                   case add: 
+                       inventory.AddItem(GetProductInfo());
+                       break;
 
-                    case displayList: 
-                        inventory.DisplayItemsList();
-                        break;
-                    case edit: 
-                        Console.WriteLine("Enter the product name to edit: ");
-                        string productNameToEdit = Console.ReadLine() ?? "";
-                        inventory.Edit(productNameToEdit, GetProductInfo());
-                        break;
-                    case delete: 
-                        Console.WriteLine("Enter the product name to delete");
-                        string productName = Console.ReadLine() ?? "";
-                        inventory.DeleteItem(productName);
-                        break;
-                    case search: 
-                        Console.WriteLine($"Enter the product name to search for: ");
-                        string searchTerm = Console.ReadLine() ?? "";
-                        Product product = inventory.SearchItem(searchTerm);
-                        if (product != null)
-                        {
-                            Console.WriteLine("Product found:");
-                            Console.WriteLine(product.ToString());
-                        }
-                        else
-                        {
-                            Console.WriteLine("Product doesn't exist!");
-                        }
-                        break;
-                    case exit: 
-                        break;
-                }
-                Console.WriteLine("Press enter to continue...");
-                Console.ReadLine();
+                   case displayList: 
+                       inventory.DisplayItemsList();
+                       break;
+                   case edit: 
+                       Console.WriteLine("Enter the product name to edit: ");
+                       string productNameToEdit = Console.ReadLine() ?? "";
+                       inventory.Edit(productNameToEdit, GetProductInfo());
+                       break;
+                   case delete: 
+                       Console.WriteLine("Enter the product name to delete");
+                       string productName = Console.ReadLine() ?? "";
+                       inventory.DeleteItem(productName);
+                       break;
+                   case search: 
+                       Console.WriteLine($"Enter the product name to search for: ");
+                       string searchTerm = Console.ReadLine() ?? "";
+                       Product product = inventory.SearchItem(searchTerm);
+                       if (product != null)
+                       {
+                           Console.WriteLine("Product found:");
+                           Console.WriteLine(product.ToString());
+                       }
+                       else
+                       {
+                           Console.WriteLine("Product doesn't exist!");
+                       }
+                       break;
+                   case exit: 
+                       break;
+               }
+               Console.WriteLine("Press enter to continue...");
+               Console.ReadLine();
             }
         }
 

@@ -1,17 +1,18 @@
 ﻿using InventoryManagement.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using InventoryManagement.Classes;
 using InventoryManagement.Classes.ProductManagement;
 
 namespace InventoryManagement.Classes.Inventory
 {
     public class Inventory : Add, Delete, DisplayList, Edit
     {
-        private List<Product> InventoryProducts = new();
+        private List<Product> InventoryProducts;
+        private Database.Database _databaseInstance;
+
+        public Inventory(Database.Database databaseInstance)
+        {
+            _databaseInstance = databaseInstance;
+        }
+
         public void AddItem(Product item)
         {
             if (item is not null)
@@ -34,12 +35,13 @@ namespace InventoryManagement.Classes.Inventory
                 Console.WriteLine("Product Doesn't exist");
             }
         }
-        public void DisplayItemsList()
+        public async Task DisplayItemsList()
         {
-            if (InventoryProducts.Count > 0)
+            var inventoryProducts = await _databaseInstance.ReadItems();
+            if (inventoryProducts.Count > 0)
             {
                 Console.WriteLine($"Inventory's products list: ");
-                foreach (Product item in InventoryProducts)
+                foreach (Product item in inventoryProducts)
                 {
                     Console.WriteLine(item.ToString());
                 }

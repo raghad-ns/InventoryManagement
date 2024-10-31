@@ -8,6 +8,6 @@ namespace InventoryManagement.Interfaces
 {
     public interface DisplayList
     {
-        void DisplayItemsList();
+        Task DisplayItemsList();
     }
 }
