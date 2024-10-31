@@ -9,7 +9,7 @@ namespace InventoryManagement
 {
     public class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Inventory inventory = new Inventory(new Database.Database());
             Console.WriteLine("***Welcome to our inventory management system***");
@@ -56,7 +56,7 @@ namespace InventoryManagement
                    case search: 
                        Console.WriteLine($"Enter the product name to search for: ");
                        string searchTerm = Console.ReadLine() ?? "";
-                       Product product = inventory.SearchItem(searchTerm);
+                       Product product = await inventory.SearchItem(searchTerm);
                        if (product != null)
                        {
                            Console.WriteLine("Product found:");

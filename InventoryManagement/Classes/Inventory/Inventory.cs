@@ -56,34 +56,23 @@ namespace InventoryManagement.Classes.Inventory
             }
         }
 
-        public Product SearchItem(string name)
+        public async Task<Product> SearchItem(string name)
         {
-            foreach (var item in InventoryProducts)
-            {
-                if (item.Name.ToLower().Equals(name.ToLower())) return item;
-            }
-            return null;
+            var items = await _databaseInstance.ReadItems(name);
+            return items[0];
         }
 
-        // There is two suggested approaches, I'm confuesed which one to implement
-        // The first is to re-implement search logic in a loop and edit the object once found,
-        // The second one is to add extra parameters for the search method to implement the edit process (make edit optional when search)
-        // But I think the second one doesn't work with single responsibility principle
-        public void Edit(string name, Product newProduct)
+        public async Task Edit(string name, Product newProduct)
         {
-            bool found = false;
-            foreach (var item in InventoryProducts)
+            try
             {
-                if (item.Name.ToLower().Equals(name.ToLower()))
-                {
-                    found = true;
-                    item.Name = newProduct.Name;
-                    item.Price = newProduct.Price;
-                    item.Quantity = newProduct.Quantity;
-                }
+                await _databaseInstance.UpdateItem(name, newProduct);
+                Console.WriteLine("Product updated successfully!");
             }
-            if (found) Console.WriteLine("Product updated successfully!");
-            else Console.WriteLine("Product doesn't exist!");
+            catch (Exception ex)
+            {
+                Console.WriteLine("Something went wrong, please try again!");
+            }
         }
     }
 }

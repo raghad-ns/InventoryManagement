@@ -10,7 +10,7 @@ public class Database
 {
     private string _connString = @"Server=DESKTOP-33KIDRJ\SQLEXPRESS;Database=InventoryManagement;Trusted_Connection = True;";
 
-    public async Task<List<Product>> ReadItems()
+    public async Task<List<Product>> ReadItems(string? name= null)
     {
         var itemsList = new List<Product>();
 
@@ -19,7 +19,7 @@ public class Database
             using (SqlConnection conn = new SqlConnection(_connString))
             {
                 //access SQL Server and run your command
-                SqlCommand items = new SqlCommand("SELECT * FROM Items ", conn);
+                SqlCommand items = new SqlCommand("SELECT * FROM Items " + (!string.IsNullOrEmpty(name) ? $"WHERE Name = '{name}'" : ""), conn);
 
                 conn.Open();
                 SqlDataReader dataReader = items.ExecuteReader();
@@ -76,7 +76,6 @@ public class Database
         catch (Exception ex)
         {
             Console.WriteLine("Exception: Failed to connect to the DB");
-            Console.WriteLine(ex.Message);
         }
     }
 
@@ -97,4 +96,29 @@ public class Database
             Console.WriteLine("Exception: Failed to connect to the DB");
         }
     }
+
+    public async Task UpdateItem(string name, Product product)
+    {
+        try
+        {
+            using (SqlConnection conn = new SqlConnection(_connString))
+            {
+                SqlCommand updateProductQuery = new SqlCommand(
+                    $@"
+                        UPDATE Items 
+                        SET Name = '{product.Name}', Quantity = {product.Quantity}, Price= {product.Price.Amount}, Currency= '{product.Price.Currency.ToString()}'
+                        WHERE Name = '{name}'",
+                    conn
+                    );
+
+                conn.Open();
+                int rowsAffected = await updateProductQuery.ExecuteNonQueryAsync(); // Executes the query
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Exception: Failed to connect to the DB");
+        }
+    }
+
 }
