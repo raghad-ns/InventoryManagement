@@ -9,6 +9,6 @@ namespace InventoryManagement.Interfaces
 {
     public interface Add
     {
-        void AddItem(Product item);
+        Task AddItem(Product item);
     }
 }

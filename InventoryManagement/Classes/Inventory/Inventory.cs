@@ -13,28 +13,32 @@ namespace InventoryManagement.Classes.Inventory
             _databaseInstance = databaseInstance;
         }
 
-        public void AddItem(Product item)
+        public async Task AddItem(Product item)
         {
-            if (item is not null)
+            try
             {
-                InventoryProducts.Add(item);
+                await _databaseInstance.AddItem(item);
+                Console.WriteLine("Product added successfully!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Something went wrong, please try again later!");
             }
         }
 
-        public void DeleteItem(string name)
+        public async Task DeleteItem(string name)
         {
-
-            Product product = SearchItem(name);
-            if (product is not null)
+            try
             {
-                InventoryProducts.Remove(product as Product);
+                await _databaseInstance.DeleteItem(name);
                 Console.WriteLine("Product deleted successfully!");
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Product Doesn't exist");
+                Console.WriteLine("Failed to delete this product!");
             }
         }
+
         public async Task DisplayItemsList()
         {
             var inventoryProducts = await _databaseInstance.ReadItems();
@@ -51,6 +55,7 @@ namespace InventoryManagement.Classes.Inventory
                 Console.WriteLine("Inventory is empty, no product found!");
             }
         }
+
         public Product SearchItem(string name)
         {
             foreach (var item in InventoryProducts)

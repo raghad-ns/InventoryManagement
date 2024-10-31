@@ -8,15 +8,15 @@ namespace InventoryManagement.Database;
 
 public class Database
 {
+    private string _connString = @"Server=DESKTOP-33KIDRJ\SQLEXPRESS;Database=InventoryManagement;Trusted_Connection = True;";
+
     public async Task<List<Product>> ReadItems()
     {
         var itemsList = new List<Product>();
 
-        string connString = @"Server=DESKTOP-33KIDRJ\SQLEXPRESS;Database=InventoryManagement;Trusted_Connection = True;";
-
         try
         {
-            using (SqlConnection conn = new SqlConnection(connString))
+            using (SqlConnection conn = new SqlConnection(_connString))
             {
                 //access SQL Server and run your command
                 SqlCommand items = new SqlCommand("SELECT * FROM Items ", conn);
@@ -47,7 +47,6 @@ public class Database
                     Console.WriteLine("No data found.");
                 }
                 dataReader.Close();
-
             }
         }
         catch (Exception ex)
@@ -56,5 +55,46 @@ public class Database
         }
 
         return itemsList;
+    }
+
+    public async Task AddItem(Product product)
+    {
+        try
+        {
+            using (SqlConnection conn = new SqlConnection(_connString))
+            {
+                SqlCommand insertProductQuery = new SqlCommand(
+                    $"INSERT INTO Items (Name, Quantity, Price, Currency) " +
+                        $"VALUES ('{product.Name}', {product.Quantity}, {product.Price.Amount}, '{product.Price.Currency.ToString()}')",
+                    conn
+                    );
+
+                conn.Open();
+                int rowsAffected = await insertProductQuery.ExecuteNonQueryAsync(); // Executes the query
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Exception: Failed to connect to the DB");
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    public async Task DeleteItem(string name)
+    {
+        try
+        {
+            using (SqlConnection conn = new SqlConnection(_connString))
+            {
+                SqlCommand deleteItem = new SqlCommand($"DELETE FROM Items WHERE Name = '{name}'", conn);
+
+                conn.Open();
+                int rowsAffected = await deleteItem.ExecuteNonQueryAsync();
+            }
+    }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Exception: Failed to connect to the DB");
+        }
     }
 }
