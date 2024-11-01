@@ -6,40 +6,54 @@ using System.Text;
 using System.Threading.Tasks;
 using InventoryManagement.Classes;
 using InventoryManagement.Classes.ProductManagement;
+using InventoryManagement.Database;
 
 namespace InventoryManagement.Classes.Inventory
 {
     public class Inventory : Add, Delete, DisplayList, Edit
     {
-        private List<Product> InventoryProducts = new();
+        private MongoHelper _databaseDriver;
+        private string _productCollectionName = "Product";
+
+        public Inventory(MongoHelper databaseDriver)
+        {
+            _databaseDriver = databaseDriver;
+        }
+
         public void AddItem(Product item)
         {
-            if (item is not null)
+            try
             {
-                InventoryProducts.Add(item);
+                _databaseDriver.InsertDocument(_productCollectionName, item);
+                Console.WriteLine("Product added successfully!");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Something went wrong, please try again later!");
+                    Console.WriteLine(ex.Message);
             }
         }
 
         public void DeleteItem(string name)
         {
-
-            Product product = SearchItem(name);
-            if (product is not null)
+            try
             {
-                InventoryProducts.Remove(product as Product);
+                Product productToBeDeleted = _databaseDriver.LoadDocumentByName<Product>(_productCollectionName, name);
+                _databaseDriver.DeleteDocument<Product>(_productCollectionName, productToBeDeleted.Id);
                 Console.WriteLine("Product deleted successfully!");
             }
-            else
+            catch
             {
-                Console.WriteLine("Product Doesn't exist");
+                Console.WriteLine("Something went wrong, please try again later!");
             }
         }
         public void DisplayItemsList()
         {
-            if (InventoryProducts.Count > 0)
+            var inventoryProducts = _databaseDriver.LoadAllDocuments<Product>(_productCollectionName);
+            if (inventoryProducts.Count > 0)
             {
                 Console.WriteLine($"Inventory's products list: ");
-                foreach (Product item in InventoryProducts)
+                foreach (Product item in inventoryProducts)
                 {
                     Console.WriteLine(item.ToString());
                 }
@@ -51,32 +65,27 @@ namespace InventoryManagement.Classes.Inventory
         }
         public Product SearchItem(string name)
         {
-            foreach (var item in InventoryProducts)
+            try
             {
-                if (item.Name.ToLower().Equals(name.ToLower())) return item;
+                return _databaseDriver.LoadDocumentByName<Product>(_productCollectionName, name);
             }
-            return null;
+            catch
+            {
+                return null;
+            }
         }
 
-        // There is two suggested approaches, I'm confuesed which one to implement
-        // The first is to re-implement search logic in a loop and edit the object once found,
-        // The second one is to add extra parameters for the search method to implement the edit process (make edit optional when search)
-        // But I think the second one doesn't work with single responsibility principle
-        public void Edit(string name, Product newProduct)
+        public void Edit(Guid id, Product newProduct)
         {
-            bool found = false;
-            foreach (var item in InventoryProducts)
+            try
             {
-                if (item.Name.ToLower().Equals(name.ToLower()))
-                {
-                    found = true;
-                    item.Name = newProduct.Name;
-                    item.Price = newProduct.Price;
-                    item.Quantity = newProduct.Quantity;
-                }
+                _databaseDriver.UpsertDocument<Product>(_productCollectionName, id, newProduct);
+                Console.WriteLine("Product updated successfully!");
             }
-            if (found) Console.WriteLine("Product updated successfully!");
-            else Console.WriteLine("Product doesn't exist!");
+            catch
+            {
+                Console.WriteLine("Something went wrong, please try again later!");
+            }
         }
     }
 }

@@ -9,9 +9,17 @@ namespace InventoryManagement
 {
     public class Program
     {
+        private static string _databaseConnectionString = "mongodb://localhost:27017/";
+        private static string _databaseName = "InventoryManagement";
         static void Main(string[] args)
         {
-            Inventory inventory = new Inventory();
+            Inventory inventory = new Inventory(
+                new Database.MongoHelper(
+                    _databaseConnectionString, 
+                    _databaseName
+                    )
+                );
+
             Console.WriteLine("***Welcome to our inventory management system***");
 
             const string add = "1";
@@ -44,15 +52,15 @@ namespace InventoryManagement
                         inventory.DisplayItemsList();
                         break;
                     case edit: 
-                        Console.WriteLine("Enter the product name to edit: ");
-                        string productNameToEdit = Console.ReadLine() ?? "";
+                        Console.WriteLine("Enter the product Id to edit: ");
+                        Guid productNameToEdit = Guid.Parse(Console.ReadLine() ?? "");
                         inventory.Edit(productNameToEdit, GetProductInfo());
                         break;
                     case delete: 
                         Console.WriteLine("Enter the product name to delete");
                         string productName = Console.ReadLine() ?? "";
                         inventory.DeleteItem(productName);
-                        break;
+                        break   ;
                     case search: 
                         Console.WriteLine($"Enter the product name to search for: ");
                         string searchTerm = Console.ReadLine() ?? "";
@@ -78,7 +86,7 @@ namespace InventoryManagement
         private static Product GetProductInfo()
         {
             Console.WriteLine("Enter product Id: ");
-            int id = int.Parse(Console.ReadLine() ?? "");
+            Guid id = Guid.Parse(Console.ReadLine() ?? "");
             Console.WriteLine("Enter product Name: ");
             string name = Console.ReadLine() ?? "";
             Console.WriteLine("Enter the quantity in stock: ");

@@ -9,6 +9,6 @@ namespace InventoryManagement.Interfaces
 {
     public interface Edit
     {
-        void Edit(string name, Product product);
+        void Edit(Guid id, Product product);
     }
 }
