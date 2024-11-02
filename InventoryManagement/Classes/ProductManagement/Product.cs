@@ -1,5 +1,7 @@
 ﻿using InventoryManagement.Classes.common;
 using InventoryManagement.Exceptions;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,9 @@ namespace InventoryManagement.Classes.ProductManagement
 {
     public class Product
     {
-        public int Id { get; set; }
+        [BsonId]
+        [BsonGuidRepresentation(GuidRepresentation.Standard)]
+        public Guid Id { get; set; }
         public string Name { get; set; }= string.Empty;
         public int Quantity { get; set; }
 
@@ -32,7 +36,7 @@ namespace InventoryManagement.Classes.ProductManagement
         }
 
         public Product() { }
-        public Product(int id, string name, Price price, int quantity)
+        public Product(Guid id, string name, Price price, int quantity)
         {
             try
             {
