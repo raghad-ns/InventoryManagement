@@ -1,82 +1,94 @@
 ﻿using InventoryManagement.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using InventoryManagement.Classes;
 using InventoryManagement.Classes.ProductManagement;
 
 namespace InventoryManagement.Classes.Inventory
 {
     public class Inventory : Add, Delete, DisplayList, Edit
     {
-        private List<Product> InventoryProducts = new();
-        public void AddItem(Product item)
+        private List<Product> InventoryProducts;
+        private Database.Database _databaseInstance;
+
+        public Inventory(Database.Database databaseInstance)
         {
-            if (item is not null)
+            _databaseInstance = databaseInstance;
+        }
+
+        public async Task AddItem(Product item)
+        {
+            try
             {
-                InventoryProducts.Add(item);
+                var productId = await _databaseInstance.AddItem(item);
+                Console.WriteLine($"Product added successfully with id: {productId}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                Console.WriteLine(ex);
             }
         }
 
-        public void DeleteItem(string name)
+        public async Task DeleteItem(string name)
         {
-
-            Product product = SearchItem(name);
-            if (product is not null)
+            try
             {
-                InventoryProducts.Remove(product as Product);
+                await _databaseInstance.DeleteItem(name);
                 Console.WriteLine("Product deleted successfully!");
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Product Doesn't exist");
+                Console.WriteLine(ex.Message);
             }
-        }
-        public void DisplayItemsList()
-        {
-            if (InventoryProducts.Count > 0)
-            {
-                Console.WriteLine($"Inventory's products list: ");
-                foreach (Product item in InventoryProducts)
-                {
-                    Console.WriteLine(item.ToString());
-                }
-            }
-            else
-            {
-                Console.WriteLine("Inventory is empty, no product found!");
-            }
-        }
-        public Product SearchItem(string name)
-        {
-            foreach (var item in InventoryProducts)
-            {
-                if (item.Name.ToLower().Equals(name.ToLower())) return item;
-            }
-            return null;
         }
 
-        // There is two suggested approaches, I'm confuesed which one to implement
-        // The first is to re-implement search logic in a loop and edit the object once found,
-        // The second one is to add extra parameters for the search method to implement the edit process (make edit optional when search)
-        // But I think the second one doesn't work with single responsibility principle
-        public void Edit(string name, Product newProduct)
+        public async Task DisplayItemsList()
         {
-            bool found = false;
-            foreach (var item in InventoryProducts)
+            try
             {
-                if (item.Name.ToLower().Equals(name.ToLower()))
+                var inventoryProducts = await _databaseInstance.ReadItems();
+                if (inventoryProducts.Count > 0)
                 {
-                    found = true;
-                    item.Name = newProduct.Name;
-                    item.Price = newProduct.Price;
-                    item.Quantity = newProduct.Quantity;
+                    Console.WriteLine($"Inventory's products list: ");
+                    foreach (Product item in inventoryProducts)
+                    {
+                        Console.WriteLine(item.ToString());
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Inventory is empty, no product found!");
                 }
             }
-            if (found) Console.WriteLine("Product updated successfully!");
-            else Console.WriteLine("Product doesn't exist!");
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public async Task<Product> SearchItem(string name)
+        {
+            try
+            {
+                var items = await _databaseInstance.ReadItems(name);
+                return items[0];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public async Task Edit(string name, Product newProduct)
+        {
+            try
+            {
+                Product updatedProduct = await _databaseInstance.UpdateItem(name, newProduct);
+                Console.WriteLine($"Product with name ({updatedProduct.Name}) updated successfully!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

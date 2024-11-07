@@ -8,6 +8,6 @@ namespace InventoryManagement.Interfaces
 {
     public interface Delete
     {
-        void DeleteItem(string name);
+        Task DeleteItem(string name);
     }
 }
