@@ -17,12 +17,13 @@ namespace InventoryManagement.Classes.Inventory
         {
             try
             {
-                await _databaseInstance.AddItem(item);
-                Console.WriteLine("Product added successfully!");
+                var productId = await _databaseInstance.AddItem(item);
+                Console.WriteLine($"Product added successfully with id: {productId}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Something went wrong, please try again later!");
+                Console.WriteLine($"Exception: {ex.Message}");
+                Console.WriteLine(ex);
             }
         }
 
@@ -35,43 +36,58 @@ namespace InventoryManagement.Classes.Inventory
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Failed to delete this product!");
+                Console.WriteLine(ex.Message);
             }
         }
 
         public async Task DisplayItemsList()
         {
-            var inventoryProducts = await _databaseInstance.ReadItems();
-            if (inventoryProducts.Count > 0)
+            try
             {
-                Console.WriteLine($"Inventory's products list: ");
-                foreach (Product item in inventoryProducts)
+                var inventoryProducts = await _databaseInstance.ReadItems();
+                if (inventoryProducts.Count > 0)
                 {
-                    Console.WriteLine(item.ToString());
+                    Console.WriteLine($"Inventory's products list: ");
+                    foreach (Product item in inventoryProducts)
+                    {
+                        Console.WriteLine(item.ToString());
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Inventory is empty, no product found!");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Inventory is empty, no product found!");
+                Console.WriteLine(ex.Message);
             }
         }
 
         public async Task<Product> SearchItem(string name)
         {
-            var items = await _databaseInstance.ReadItems(name);
-            return items[0];
+            try
+            {
+                var items = await _databaseInstance.ReadItems(name);
+                return items[0];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         public async Task Edit(string name, Product newProduct)
         {
             try
             {
-                await _databaseInstance.UpdateItem(name, newProduct);
-                Console.WriteLine("Product updated successfully!");
+                Product updatedProduct = await _databaseInstance.UpdateItem(name, newProduct);
+                Console.WriteLine($"Product with name ({updatedProduct.Name}) updated successfully!");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Something went wrong, please try again!");
+                Console.WriteLine(ex.Message);
             }
         }
     }
