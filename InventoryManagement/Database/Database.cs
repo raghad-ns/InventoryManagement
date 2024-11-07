@@ -1,14 +1,23 @@
-﻿using InventoryManagement.Classes.common;
+﻿using InventoryManagement.AppSettings;
+using InventoryManagement.Classes.common;
 using InventoryManagement.Classes.ProductManagement;
 using InventoryManagement.Classes.ProductManagement.ProductTypes;
 using InventoryManagement.Enums.common;
 using System.Data.SqlClient;
+using System.Text.Json;
 
 namespace InventoryManagement.Database;
 
 public class Database
 {
-    private string _connString = @"Server=DESKTOP-33KIDRJ\SQLEXPRESS;Database=InventoryManagement;Trusted_Connection = True;";
+    private string _connString;
+
+    public Database()
+    {
+        string appSettingsJson = File.ReadAllText(@"..\..\..\AppSettings\appsettings.json");
+        var appSettingsObject = JsonSerializer.Deserialize<AppSettingsModel>(appSettingsJson);
+        _connString = appSettingsObject.SQLServerConnectionString;
+    }
 
     public async Task<List<Product>> ReadItems(string? name= null)
     {
